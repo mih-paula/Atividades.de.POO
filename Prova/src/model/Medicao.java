@@ -7,6 +7,9 @@ public class Medicao {
     private String dataHora;
 
 
+    public Medicao() {
+    }
+
     public Medicao(int id, double valor, String unidade, String dataHora){
         this.id=id;
         this.valor=valor;
@@ -46,4 +49,7 @@ public class Medicao {
         this.dataHora=dataHora;
     }
 
+
+    public void medir(Sensor sr){
+        System.out.println("Medir sensor: " + sr.getId() + " - " + sr.getCodigo() + " - " + sr.getTipo() + " - " + sr.getLocalizacao());    }
 }

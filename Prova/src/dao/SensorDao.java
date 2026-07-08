@@ -8,10 +8,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class SensorDao {
+
     public void inserir(Sensor sensor) {
         String sql = "INSERT INTO sensor(id, codigo, tipo, localizacao) VALUES(?, ?, ?, ?)";
         try (
-                Connection conn = conexao.getConnection();
+                Connection conn = Conexao.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(sql)
         ) {
             stmt.setInt(1, sensor.getId());
@@ -22,28 +23,30 @@ public class SensorDao {
             System.out.println("Sensor cadastrado!");
 
         } catch (SQLException e) {
-            System.out.println("Erro: " + e.getMessage());
+            System.out.println("Erro ao inserir: " + e.getMessage());
         }
+    }
+    public Sensor consultarPorCodigo(String codigo) {
+        String sql = "SELECT * FROM sensor WHERE codigo = ?";
+        try (
+                Connection conn = Conexao.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql)
+        ) {
+            stmt.setString(1, codigo);
 
-        public Sensor consultarPorCodigo(String codigo){
-            String sql = "SELECT * FROM sensor WHERE codigo= ?";
-            try (
-                    Connection conn = conexao.getConnection();
-                    PreparedStatement stmt = conn.prepareStatement(sql)
-            ) {
-                stmt.setString(1, sensor.getCodigo());
-                ResultSet rs = stmt.executeQuery();
+            try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
                     Sensor sensor = new Sensor();
-                    sensor.setCodigo(rs.getString("Codigo"));
-                    return Sensor;
-
-                } catch(SQLException e){
-                    System.out.println("Erro: " + e.getMessage());
+                    sensor.setId(rs.getInt("id"));
+                    sensor.setCodigo(rs.getString("codigo"));
+                    sensor.setTipo(rs.getString("tipo"));
+                    sensor.setLocalizacao(rs.getString("localizacao"));
+                    return sensor;
                 }
-                return null;
-
             }
+        } catch (SQLException e) {
+            System.out.println("Erro ao consultar: " + e.getMessage());
         }
+        return null;
     }
 }

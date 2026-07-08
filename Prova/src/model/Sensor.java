@@ -6,6 +6,9 @@ public class Sensor {
     private String tipo;
     private String localizacao;
 
+    public Sensor() {
+    }
+
     public Sensor(int id, String codigo, String tipo, String localizacao){
         this.id=id;
         this.codigo=codigo;
@@ -19,7 +22,6 @@ public class Sensor {
     public void setId(int id){
         this.id=id;
     }
-
 
 
     public String getCodigo(){
